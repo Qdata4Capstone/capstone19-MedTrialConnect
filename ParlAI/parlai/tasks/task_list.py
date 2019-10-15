@@ -1030,4 +1030,13 @@ task_list = [
             " for more information). "
         ),
     },
+    {
+        "id":"ClinicalTrials",
+        "display_name": "Clinical Trials",
+        "task": "clinical_trials",
+        "tags": ["All"],
+        "description": (
+            "QA task based on the clinical trials data",
+        )
+    },
 ]
