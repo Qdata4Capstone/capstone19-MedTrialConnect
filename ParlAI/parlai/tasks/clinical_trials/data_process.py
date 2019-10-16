@@ -11,26 +11,6 @@ import traceback
 import xml.etree.ElementTree as ET
 
 
-"""
-Extract all fields from nested clinical trial data structure
-"""
-def extract_fields(trial_data):
-    fields = []
-    if isinstance(trial_data, dict):
-        for _, value in trial_data.items():
-            if isinstance(value, str):
-                fields.append(value)
-            else:
-                fields.extend(extract_fields(value))
-    elif isinstance(trial_data, list):
-        for value in trial_data:
-            if isinstance(value, str):
-                fields.append(value)
-            else:
-                fields.extend(extract_fields(value))
-    return fields
-
-
 '''
 * After downloaded from clinicaltrials.gov and extracted, file structure should look like:
 	AllPublicXML/ 
@@ -131,13 +111,10 @@ def json2txt(json_dir, txt_filename):
                         for i in range(0, len(data), 2):
                             """
                             Each clinical trial data has two lines:
-                            First line is the trial id
+                            First line is the trial index
                             Second line is all the information about the trial such as summary, description...
                             """
-                            trial_index = json.loads(data[i])['index'] 
-                            trial_data = json.loads(data[i+1])
-                            trial_data.update(trial_index)
-                            all_trials.append(trial_data)
+                            all_trials.append(data[i+1])
 
             except Exception:
                 print("An error was encountered; check error_log.txt")
@@ -147,16 +124,7 @@ def json2txt(json_dir, txt_filename):
                     f.write("Error processing file " + fname + '\n')
                     traceback.print_exc(file=f)
                     exit()
-    # process trials data and write all to file
+    # process trials data and write all to txt file
     with open(txt_filename, 'w') as f:
-		# punctuation removal
-        tbl = dict.fromkeys(i for i in range(sys.maxunicode) if unicodedata.category(chr(i)).startswith('P'))
         for trial_data in all_trials:
-            trial_str = ' '.join(extract_fields(trial_data))
-            # lowercase
-            trial_str = trial_str.lower()
-            # remove punctuation
-            trial_str = trial_str.translate(tbl)
-            # normalize whitespace
-            trial_str = ' '.join(trial_str.split()) + '\n'
-            f.write(trial_str)
+            f.write(trial_data)
