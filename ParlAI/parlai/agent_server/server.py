@@ -25,8 +25,7 @@ class ClinicalTrialsTFIDFRetrieverHandler(RequestHandler):
         retriever_output = world.acts[-1]
         # retrieve trial data as dict
         candidates = retriever_output['candidates']
-        candidate_scores = retriever_output['candidate_scores']
-        self.write({'candidates':candidates, 'candidate_scores':candidate_scores})
+        self.write({'top_result':candidates[0]})
 
 def make_app():
     # setup arguments
