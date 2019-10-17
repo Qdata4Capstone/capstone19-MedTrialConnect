@@ -312,7 +312,8 @@ class TfidfRetrieverAgent(Agent):
                 if self.opt.get('remove_title', False):
                     picks = ['\n'.join(p.split('\n')[1:]) for p in picks]
                     pick = '\n'.join(pick.split('\n')[1:])
-                reply['text_candidates'] = picks
+
+                reply['candidates'] = [json.loads(self.db.get_doc_text(int(doc_id))) for doc_id in doc_ids]
                 reply['candidate_scores'] = doc_scores
 
                 # could pick single choice based on probability scores?
