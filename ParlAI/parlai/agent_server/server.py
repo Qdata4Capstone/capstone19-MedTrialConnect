@@ -6,9 +6,7 @@ from parlai.core.agents import create_agent
 from parlai.agents.tfidf_retriever.tfidf_retriever import TfidfRetrieverAgent
 from query_agent import QueryAgent
 
-PORT = 8888
 CLINICAL_TRIALS_URL = "/clinicaltrials"
-TFIDF_RETRIEVER_MF = '/tmp/clinical_trials_tfidf'
 
 class ClinicalTrialsTFIDFRetrieverHandler(RequestHandler):
     def initialize(self, opt):
@@ -25,18 +23,18 @@ class ClinicalTrialsTFIDFRetrieverHandler(RequestHandler):
         retriever_output = world.acts[-1]
         # retrieve trial data as dict
         candidates = retriever_output['candidates']
-        self.write({'top_result':candidates[0]})
-
-def make_app():
-    # setup arguments
-    parser = setup_args()
-    opt = parser.parse_args()
-    opt['model_file'] = TFIDF_RETRIEVER_MF
-    urls = [(CLINICAL_TRIALS_URL, ClinicalTrialsTFIDFRetrieverHandler, dict(opt=opt))]
-    return Application(urls)
+        candidate_scores = retriever_output['candidate_scores']
+        for i in range(len(candidates)):
+            candidates[i]['tfidf_score'] = candidate_scores[i]
+        self.write({'candidates':candidates})
 
 if __name__ == '__main__':
-    app = make_app()
-    app.listen(PORT)
-    print(f'server listening on port {PORT}')
+    # setup arguments
+    parser = setup_args()
+    parser.add_argument("--port", help="server port number", type=int)
+    opt = parser.parse_args()
+    urls = [(CLINICAL_TRIALS_URL, ClinicalTrialsTFIDFRetrieverHandler, dict(opt=opt))]
+    app = Application(urls)
+    app.listen(opt['port'])
+    print(f'server listening on port {opt["port"]}')
     IOLoop.instance().start()
