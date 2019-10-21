@@ -12,7 +12,7 @@ python3 examples/display_data.py -t clinical_trials
 ```bash
 python3 examples/train_model.py -m tfidf_retriever -t clinical_trials -mf CLINICAL_TRIALS_MODEL_FILE_PATH -dt train:ordered -eps 1
 ```
-4. start tf-idf retriever agent as a server, config url and port and model file path in server.py
+4. start tf-idf retriever agent as a server, config url in server.py
 ```bash
 python3 parlai/agent_server/server.py --port PORT_NUMBER --model_file CLINICAL_TRIALS_MODEL_FILE_PATH
 ```
