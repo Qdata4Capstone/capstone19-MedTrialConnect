@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Content, Text, Spinner, List, ListItem } from "native-base";
+import { Container, Content, Text, Spinner, List, ListItem, Body, Left, Right } from "native-base";
 import { Actions } from "react-native-router-flux";
 import { serverUrl } from "../config";
 
@@ -51,7 +51,10 @@ export default class TrialSearchResults extends Component {
             {
               this.state.searchResults.map(trial =>
                 <ListItem key={trial.nct_id} onPress={() => Actions.TrialView({ trial: trial, searchInput: this.props.searchInput })}>
-                  <Text>{trial.brief_title}</Text>
+                  <Body>
+                    <Text>{trial.brief_title}</Text>
+                  </Body>
+                  <Right note><Text>Score: {parseFloat(Math.round(trial.tfidf_score * 100) / 100).toFixed(2)}</Text></Right>
                 </ListItem>
               )
             }
