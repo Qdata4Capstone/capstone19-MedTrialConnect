@@ -10,7 +10,9 @@ $ python3 examples/display_data.py -t clinical_trials
 ```
 ## Construct Sparse Matrix(validation takes a very long time, can be skipped by entering Ctrl+C when terminal shows validating...)
 ```bash
-$ python3 examples/train_model.py -m tfidf_retriever -t $ clinical_trials -mf MODEL_PATH -dt train:ordered -eps 1
+$ python3 examples/train_model.py -m tfidf_retriever -t clinical_trials -mf MODEL_PATH -dt train:ordered -eps 1
+#example MODEL_PATH: /tmp/clinical_trials_tfidf
+#in the example above, a file named clinical_trials_tfidf will be created under /tmp
 ```
 ## Setup Flask Server
 ```bash
