@@ -33,5 +33,8 @@ $ flask run --host=0.0.0.0
 ```bash
 $ cd ../../../App
 $ npm install
+$ cd ios/
+$ pod install
+$ cd ..
 $ react-native run-ios
 ```
