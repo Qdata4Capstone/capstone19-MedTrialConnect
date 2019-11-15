@@ -8,7 +8,7 @@ $ python3 setup.py develop
 ```bash
 $ python3 examples/display_data.py -t clinical_trials
 ```
-## Construct Sparse Matrix(validation takes a very long time, can be skipped by entering Ctrl+C when terminal shows validating...)
+## Construct Sparse Matrix(validation takes a very long time, can be skipped by entering Ctrl+C when terminal shows [ running eval: valid ])
 ```bash
 $ python3 examples/train_model.py -m tfidf_retriever -t clinical_trials -mf MODEL_PATH -dt train:ordered -eps 1
 #example MODEL_PATH: /tmp/clinical_trials_tfidf
