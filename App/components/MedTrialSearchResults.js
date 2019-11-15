@@ -54,7 +54,7 @@ export default class TrialSearchResults extends Component {
                   <Body>
                     <Text>{trial.brief_title}</Text>
                   </Body>
-                  <Right note><Text>Score: {parseFloat(Math.round(trial.tfidf_score * 100) / 100).toFixed(2)}</Text></Right>
+                  <Right note><Text>Match Score: {parseFloat(Math.round(trial.tfidf_score * 100) / 100).toFixed(2)}</Text></Right>
                 </ListItem>
               )
             }

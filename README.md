@@ -1,18 +1,37 @@
 # MedTrialConnect
-## Building the ParlAI backend
-1. build the parlai project:  
-```bash 
-python3 setup.py develop
-```
-2. download, build and display the clinical trials data:  
+## Build ParlAI Project
 ```bash
-python3 examples/display_data.py -t clinical_trials
+$ cd ParlAI/
+$ python3 setup.py develop
 ```
-3. build tf-idf sparse matrix
+## Download & Display Data
 ```bash
-python3 examples/train_model.py -m tfidf_retriever -t clinical_trials -mf CLINICAL_TRIALS_MODEL_FILE_PATH -dt train:ordered -eps 1
+$ python3 examples/display_data.py -t clinical_trials
 ```
-4. start tf-idf retriever agent as a server, config url in server.py
+## Construct Sparse Matrix(validation takes a very long time, can be skipped by entering Ctrl+C when terminal shows validating...)
 ```bash
-python3 parlai/agent_server/server.py --port PORT_NUMBER --model_file CLINICAL_TRIALS_MODEL_FILE_PATH
+$ python3 examples/train_model.py -m tfidf_retriever -t $ clinical_trials -mf MODEL_PATH -dt train:ordered -eps 1
+```
+## Setup Flask Server
+```bash
+$ cd parlai/medtrial_connect/
+```
+## Config URL, PORT, MODEL_PATH
+```bash
+#modify parlai/medtrial_connect/config.py
+```
+## Run Flask Server
+```bash
+$ export FLASK_APP=server.py
+$ flask run --host=0.0.0.0
+```
+## Setup React-Native Dev Environment
+```bash
+#visit https://facebook.github.io/react-native/docs/getting-started
+```
+## Build React Native App With IOS Simulator On MacOS
+```bash
+$ cd ../../../App
+$ npm install
+$ react-native run-ios
 ```
